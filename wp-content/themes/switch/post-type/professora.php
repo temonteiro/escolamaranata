@@ -54,11 +54,10 @@
 	  $professorInfo = $wpdb->get_results("SELECT * 
 									   FROM mar_professor 
 									   WHERE nome_professor ='".$post->post_title."'");
-	  
 
 	  foreach ($professorInfo as $professor) {
 	  	  $professorNome 	= $professor->nome_professor;
-	      $data_nascimento 	= $professor->data_nascimento;
+	      $data_nascimento 	= date('d/m/Y ', strtotime($professor->data_nascimento));
 	      $is_ativo 		= $professor->is_ativo;
 	  }
 
@@ -97,17 +96,20 @@
 										   FROM mar_professor 
 										   WHERE nome_professor ='".$_POST['nome_professor']."'");
 
+		$date1 = strtr($_POST['data_nascimento'], '/', '-');
+		$timestamp = date('Y-m-d H:i:s', strtotime($date1));  
+
 		if(count($existeAluno) > 0){
 			$wpdb->update('mar_professor', array(
 					'nome_professor' => $_POST['nome_professor'],
-					'data_nascimento' => $_POST['data_nascimento'],
+					'data_nascimento' => $timestamp,
 					'is_ativo' => $_POST['is_ativo']
 				),
-				array('nome_aluno' => $_POST['nome_aluno']));
+				array('id_professor' => $existeAluno[0]->id_professor));
 		}else{
 			$wpdb->insert('mar_professor', array(
 					'nome_professor' => $_POST['nome_professor'],
-					'data_nascimento' => $_POST['data_nascimento'],
+					'data_nascimento' => $timestamp,
 					'is_ativo' => $_POST['is_ativo']
 				));
 		}
