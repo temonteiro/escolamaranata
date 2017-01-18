@@ -491,8 +491,3 @@ require_once(get_template_directory() . "/post-type/aluno.php");
 require_once(get_template_directory() . "/post-type/professora.php");
 require_once(get_template_directory() . "/post-type/turma.php");
 
-add_action('admin_print_styles', 'bootstrap_styles');
-function bootstrap_styles(){
-    wp_enqueue_style('bootstrap-css', get_template_directory_uri() . '/style/css/bootstrap.min.css', array('switch-stylesheet'));
-    wp_enqueue_style('bootstrap-theme-css', get_template_directory_uri() . '/style/css/bootstrap-theme.min.css', array('switch-stylesheet'));
-}
